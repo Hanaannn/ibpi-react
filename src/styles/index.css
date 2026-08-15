@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens — see src/constants/theme.js for the JS-side mirror  */
+/* ------------------------------------------------------------------ */
+@theme {
+  /* Graphite — structural steel dark, base surface */
+  --color-graphite-950: #10151c;
+  --color-graphite-900: #171d26;
+  --color-graphite-800: #1d2126;
+  --color-graphite-700: #2a2f36;
+  --color-graphite-600: #3c424b;
+
+  /* Steel — secondary neutral for text on dark */
+  --color-steel-400: #8a93a0;
+  --color-steel-300: #a7afba;
+  --color-steel-200: #c7ccd3;
+
+  /* Paper — poured-concrete light surface */
+  --color-paper-50: #f6f5f2;
+  --color-paper-100: #efece5;
+  --color-paper-200: #e3ded3;
+
+  /* Amber — safety-signal accent, primary CTA colour */
+  --color-amber-400: #5598cd;
+  --color-amber-500: #1c75bc;
+  --color-amber-600: #165e96;
+
+/* Blueprint blue — brand primary (#1C75BC), used for nav text, links & accents */
+  --color-blueprint-300: #4a91c9;
+  --color-blueprint-500: #1c75bc;
+  --color-blueprint-700: #14538a;
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --shadow-card: 0 1px 2px rgba(11, 13, 15, 0.06), 0 12px 32px -12px rgba(11, 13, 15, 0.18);
+  --shadow-card-dark: 0 1px 2px rgba(0, 0, 0, 0.4), 0 20px 48px -16px rgba(0, 0, 0, 0.55);
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-drift: drift 14s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(0, -14px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Base layer                                                         */
+/* ------------------------------------------------------------------ */
+@layer base {
+  * {
+    border-color: var(--color-graphite-700);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-paper-50);
+    color: var(--color-graphite-900);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-amber-400);
+    color: var(--color-graphite-950);
+  }
+
+  /* Visible keyboard focus everywhere — accessibility floor */
+  :focus-visible {
+    outline: 2px solid var(--color-amber-500);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-paper-100);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-graphite-600);
+    border-radius: 999px;
+    border: 2px solid var(--color-paper-100);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Blueprint grid backdrop, used sparingly behind hero/CTA sections */
+  .bg-blueprint-grid {
+    background-image:
+      linear-gradient(to right, rgba(143, 179, 209, 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(143, 179, 209, 0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion — respected globally                                */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
